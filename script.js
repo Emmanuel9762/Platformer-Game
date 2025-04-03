@@ -4,3 +4,11 @@ const startScreen = document.getElementById(".start-screen");
 const checkpointScreen = document.querySelector(".checkpoint-screen");
 const checkpointMessage = document.querySelector(".checkpoint-screen > p");
 const ctx = canvas.getContext("2d");
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+const gravity = 0.5;
+let isCheckpointCollisionDectectionActive = true;
+
+const proportionalSize = (size) => {
+    return innerHeight < 500 ? Math.ceil((size / 500) * innerHeight) : size;
+}
