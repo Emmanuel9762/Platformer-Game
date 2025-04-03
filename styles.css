@@ -1,0 +1,32 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: brown;
+}
+
+h1 {
+    display: flex;
+    align-items: center;
+}
+
+
+.start-screen {
+    border: 2px solid beige;
+    padding-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.btn-container {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.checkpoint-screen {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    
+}
