@@ -1,8 +1,11 @@
+//Query imports
 const startBtn = document.getElementById("start-btn");
 const canvas = document.getElementById("canvas");
 const startScreen = document.getElementById(".start-screen");
 const checkpointScreen = document.querySelector(".checkpoint-screen");
 const checkpointMessage = document.querySelector(".checkpoint-screen > p");
+
+//canvas creation
 const ctx = canvas.getContext("2d");
 canvas.width = innerWidth;
 canvas.height = innerHeight;
@@ -29,5 +32,39 @@ class Player {
     draw() {
         ctx.fillStyle = "#99c9ff"
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
-    }
+    };
+    update() {
+        this.draw();
+        this.position.x += this.velocity.x;
+        this.position.y += this.velocity.y;
+
+        //logic for keeping the the Player character inbounds
+        if (this.position.y + this.height + this.velocity.y <= canvas.height) {
+            if (this.position.y < 0) {
+                this.position.y = 0;
+                this.velocity.y = gravity;
+            }
+            this.velocity.y += gravity;
+        }else {
+            this.velocity.y = 0;
+        }
+
+        if (this.position.x < this.width) {
+            this.position.x = this.width;
+        }
+        
+        if(this.position.x >= canvas.width - this.width * 2) {
+            this.position.x = canvas.width - this.width * 2;
+        }
+    };
 }
+
+const player = new Player();
+
+const startGame = () => {
+    canvas.style.display = "block";
+    startScreen.style.display = "none";
+    player.draw();
+}
+
+startBtn.addEventListener("click", startGame);
