@@ -59,69 +59,84 @@ class Player {
     };
 }
 
+class Platform {
+  constructor(x, y) {
+    this.position = {
+      x,
+      y,
+    };
+
+  }
+}
+
+
 const player = new Player();
 
 const animate = () => {
-    requestAnimationFrame(animate);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    player.update();
-    
-    //horizontal controls
-    if (keys.rightKey.pressed && player.position.x < proportionalSize(400)) {
-      player.velocity.x = 5;
-    } else if (keys.leftKey.pressed && player.position.x > proportionalSize(100)) {
-      player.velocity.x = -5;
-    } else {
-      player.velocity.x = 0;
-    }
-  }
-  
-  
-  const keys = {
-    rightKey: {
-      pressed: false
-    },
-    leftKey: {
-      pressed: false
-    }
-  };
+  requestAnimationFrame(animate);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  player.update();
 
-  //player movement
-  const movePlayer = (key, xVelocity, isPressed) => {
-    if (!isCheckpointCollisionDetectionActive) {
-      player.velocity.x = 0;
-      player.velocity.y = 0;
-      return;
-    }
-  
-  
-    switch (key) {
-      case "ArrowLeft":
-        keys.leftKey.pressed = isPressed;
-        if (xVelocity === 0) {
-          player.velocity.x = xVelocity;
-        }
-        player.velocity.x -= xVelocity;
-        break;
-      case "ArrowUp":
-      case " ":
-      case "Spacebar":
-        player.velocity.y -= 8;
-        break;
-      case "ArrowRight": 
-        keys.rightKey.pressed = isPressed;
-        if (xVelocity === 0) {
-          player.velocity.x = xVelocity;
-        }
-        player.velocity.x += xVelocity;
-    }
-  
+  if (keys.rightKey.pressed && player.position.x < proportionalSize(400)) {
+    player.velocity.x = 5;
+  } else if (keys.leftKey.pressed && player.position.x > proportionalSize(100)) {
+    player.velocity.x = -5;
+  } else {
+    player.velocity.x = 0;
   }
+}
+
+
+const keys = {
+  rightKey: {
+    pressed: false
+  },
+  leftKey: {
+    pressed: false
+  }
+};
+
+const movePlayer = (key, xVelocity, isPressed) => {
+  if (!isCheckpointCollisionDetectionActive) {
+    player.velocity.x = 0;
+    player.velocity.y = 0;
+    return;
+  }
+
+  switch (key) {
+    case "ArrowLeft":
+      keys.leftKey.pressed = isPressed;
+      if (xVelocity === 0) {
+        player.velocity.x = xVelocity;
+      }
+      player.velocity.x -= xVelocity;
+      break;
+    case "ArrowUp":
+    case " ":
+    case "Spacebar":
+      player.velocity.y -= 8;
+      break;
+    case "ArrowRight":
+      keys.rightKey.pressed = isPressed;
+      if (xVelocity === 0) {
+        player.velocity.x = xVelocity;
+      }
+      player.velocity.x += xVelocity;
+  }
+}
 
 const startGame = () => {
-    canvas.style.display = "block";
-    startScreen.style.display = "none";
-    player.draw();
+  canvas.style.display = "block";
+  startScreen.style.display = "none";
+  animate();
 }
 
 startBtn.addEventListener("click", startGame);
+
+window.addEventListener("keydown", ({ key }) => {
+  movePlayer(key, 8, true);
+});
+
+window.addEventListener("keyup", ({ key }) => {
+  movePlayer(key, 0, false);
+});
