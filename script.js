@@ -187,7 +187,18 @@ const animate = () => {
       return;
     }
 
-const platformDetectionRules = [];
+    const platformDetectionRules = [
+      player.position.x >= platform.position.x - player.width / 2,
+      player.position.x <= platform.position.x + platform.width - player.width / 3,
+      player.position.y + player.height >= platform.position.y,
+      player.position.y <= platform.position.y + platform.height,
+    ];
+    
+    if (platformDetectionRules.every(rule => rule)) {
+      player.position.y = platform.position.y + player.height;
+      player.velocity.y = gravity;
+    };
+    
   });
 
 }
