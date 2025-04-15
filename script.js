@@ -148,6 +148,7 @@ const animate = () => {
     player.velocity.x = 5;
   } else if (keys.leftKey.pressed && player.position.x > proportionalSize(100)) {
     player.velocity.x = -5;
+    
   } else {
     player.velocity.x = 0;
 
@@ -155,9 +156,19 @@ const animate = () => {
       platforms.forEach((platform) => {
         platform.position.x -= 5;
       });
+
+      checkpoints.forEach((checkpoint) => {
+        checkpoint.position.x -= 5;
+      });
+      
     } else if (keys.leftKey.pressed && isCheckpointCollisionDetectionActive) {
       platforms.forEach((platform) => {
         platform.position.x += 5;
+
+        checkpoints.forEach((checkpoint) => {
+          checkpoint.position.x += 5;
+        });
+        
       });
     }
   }
